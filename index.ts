@@ -1,28 +1,56 @@
-
-import express, { Express, Request, Response } from "express";
-import dotenv from "dotenv";
-import cors from "cors";
+import express from "express";
 import helmet from "helmet";
+import authLib from "auth-lib-jwt";
+import 'dotenv/config';
+
+import { dbconnect } from "./src/dbConnection";
+import authService from "./src/services/authService";
 
 
-dotenv.config();
-const app = express()
-const port = process.env.PORT;
-app.listen(port)
+const {
+  getUser,
+  deleteExistingToken,
+  getToken,
+  saveRefreshToken,
+  saveUser,
+} = authService();
 
-let corsOptions = {
-    origin: [`http://localhost:${port}`],
-}
-app.use(cors(corsOptions))
-app.use(express.json()); //Used to parse JSON bodies
-app.use(helmet())
+// Initialize authentication library
+// authLib.initialize({
+//   // Implement your own logic for these functions
+//   getUser,
+//   addToken: saveRefreshToken,
+//   getToken,
+//   saveUser,
+//   deleteExistingToken,
+// });
 
+const app = express();
+// BigInt.prototype.toJSON = function () {
+//   return this.toString();
+// };
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
+app.use(helmet());
 
-app.get("/", (req: Request, res: Response) => {
-    res.send("Hello");
-});
+// Routers
+// app.use("/api/auth", authLib.getRoutes());
+app.use("/" , (req, res) => res.send("Sucess"))
+
+const port: string | number = process.env.PORT || 3000;
 
 app.listen(port, () => {
-    console.log(`[server]: Server is running at http://localhost:${port}`);
-});
+  console.log(`
+🚀 Server ready at: ${port}`);
 
+  try {
+    dbconnect.connect();
+    console.log("Connected");
+    
+  }
+  catch(err){
+    console.log("err", err);
+    
+  }
+});
