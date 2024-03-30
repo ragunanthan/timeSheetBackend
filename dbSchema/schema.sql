@@ -3,7 +3,7 @@ CREATE TABLE `User` (
   `User_ID` INT NOT NULL AUTO_INCREMENT,
   `Username` VARCHAR(50) NOT NULL,
   `Email` VARCHAR(60) NOT NULL,
-  `Password` VARCHAR(50) NOT NULL,
+  `Password` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`User_ID`)
 );
 
