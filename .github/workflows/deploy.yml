@@ -1,0 +1,23 @@
+name: Deploy to VM
+
+on:
+  push:
+    branches:
+      - main  # Adjust the branch name as needed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Use an Ubuntu runner
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Transfer Docker Image to VM
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "."
+          target: /home/ubuntu/backend
