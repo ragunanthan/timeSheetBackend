@@ -1,4 +1,8 @@
 import mysql from 'mysql2';
+import dotenv from "dotenv";
+
+export const config = dotenv.config().parsed;
+
 interface ProcessEnv {
   MYSQL_HOST?: string;
   MYSQL_PORT?: number;
@@ -9,7 +13,7 @@ interface ProcessEnv {
 }
 
 // Assert that process.env has the type of ProcessEnv
-const env = process.env as ProcessEnv;
+const env = config as ProcessEnv;
 
  export const dbConnection = mysql.createConnection({
   host: env.MYSQL_HOST,
