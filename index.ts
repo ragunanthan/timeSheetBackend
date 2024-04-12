@@ -18,13 +18,13 @@ app.use("/api/auth", authLib.getRoutes());
 
 const port: string | number = process.env.PORT || 3000;
 
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`
 🚀 Server ready at: ${port}`);
 
   try {
-    dbconnect.connect();
-    console.log("Connected");
+    const data = await dbconnect.connect();
+    console.log(data, "Connected");
     
   }
   catch(err){

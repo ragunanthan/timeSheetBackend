@@ -18,7 +18,7 @@ export interface UserResponseType {
   User_ID: number;
   name: string;
   Email: string;
-  Password: string;
+  password: string;
 }
 
 export type TokenType =

@@ -2,14 +2,15 @@ import { boolRes, userType } from "./types";
 import { dbconnect } from "../dbConnection";
 
 const getUser = async (body: any): Promise<userType> => {
-  const [user]: any = await dbconnect.execute(
-    "SELECT * FROM User WHERE Email = ?",
+  const user: any = await dbconnect.query(
+    `SELECT * FROM "User" WHERE email = $1`,
     [body.Email]
   );
-  if (user?.length)
+  
+  if (user.rows?.length)
     return {
       success: true,
-      data: user[0],
+      data: user.rows[0]
     };
   else
     return {
@@ -18,7 +19,7 @@ const getUser = async (body: any): Promise<userType> => {
 };
 
 // const getToken = async (userID: number): Promise<TokenType> => {
-//   const [tokenArray]: any = await dbconnect.execute(
+//   const [tokenArray]: any = await dbconnect.query(
 //     "SELECT token FROM token WHERE user_ID = ?",
 //     [userID]
 //   );
@@ -39,7 +40,7 @@ const getUser = async (body: any): Promise<userType> => {
 //   try {
 //     const { success } = await getToken(userId);
 //     if (success) {
-//       await dbconnect.execute("DELETE FROM token WHERE user_ID = ?", [userId]);
+//       await dbconnect.query("DELETE FROM token WHERE user_ID = ?", [userId]);
 //     }
 //     return {
 //       success: true,
@@ -56,7 +57,7 @@ const getUser = async (body: any): Promise<userType> => {
 //   refreshToken: string
 // ): Promise<boolRes> => {
 //   try {
-//     await dbconnect.execute(
+//     await dbconnect.query(
 //       "INSERT INTO token (user_ID, token) VALUES (?, ?)",
 //       [userId, refreshToken]
 //     );
@@ -72,9 +73,9 @@ const getUser = async (body: any): Promise<userType> => {
 
 const saveUser = async (body: any, hashPassword: string): Promise<boolRes> => {
   try {
-    const res = await dbconnect.execute(
-      "INSERT INTO User (Username, Email, Password) VALUES (?, ?, ?)",
-      [body.userName, body.email, hashPassword]
+    const res = await dbconnect.query(
+      `INSERT INTO "User" (name, email, password) VALUES ($1, $2, $3)`,
+      [body.userName, body.Email, hashPassword]
     );
     return {
       success: true,

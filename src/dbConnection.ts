@@ -1,4 +1,4 @@
-import mysql from 'mysql2';
+// import mysql from 'mysql2';
 import dotenv from "dotenv";
 
 export const config = dotenv.config().parsed;
@@ -15,12 +15,18 @@ interface ProcessEnv {
 // Assert that process.env has the type of ProcessEnv
 const env = config as ProcessEnv;
 
- export const dbConnection = mysql.createConnection({
-  host: env.MYSQL_HOST,
-  port : env.MYSQL_PORT,
-  user: env.MYSQL_ROOT_USER,
-  password: env.MYSQL_ROOT_PASSWORD,
-  database: env.MYSQL_DATABASE
-});
+//  export const dbConnection = mysql.createConnection({
+//   host: env.MYSQL_HOST,
+//   port : env.MYSQL_PORT,
+//   user: env.MYSQL_ROOT_USER,
+//   password: env.MYSQL_ROOT_PASSWORD,
+//   database: env.MYSQL_DATABASE
+// });
 
-export const dbconnect = dbConnection.promise();
+// export const dbconnect = dbConnection.promise();
+
+import { Client } from 'pg';
+
+const client = new Client();
+
+export const dbconnect = client;

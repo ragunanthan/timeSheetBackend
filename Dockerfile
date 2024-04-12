@@ -1,7 +1,6 @@
-FROM node:alpine
+FROM node:20.10.0-alpine
 WORKDIR /usr/src/app
-COPY ./package.json ./
-COPY ./package-lock.json ./
+COPY . .
 RUN npm install
-COPY ./dist ./dist
+RUN npm run build
 CMD npm start

@@ -72,7 +72,7 @@ const login = async (req: Request, res: Response) => {
 
     const verifiedPassword = await bcrypt.compare(
       req.body.password,
-      result.data.Password
+      result.data.password
     );
 
     if (!verifiedPassword)
