@@ -11,7 +11,7 @@ import { config } from "../dbConnection";
 
 const generateAccessToken = (payload: UserResponseType): string => {
   return jwt.sign(payload, process.env.ACCESS_TOKEN_PRIVATE_KEY as string, {
-    expiresIn: "14m",
+    expiresIn: "1d",
   });
 };
 

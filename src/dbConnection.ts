@@ -25,8 +25,8 @@ const env = config as ProcessEnv;
 
 // export const dbconnect = dbConnection.promise();
 
-import { Client } from 'pg';
+import { Pool } from 'pg';
 
-const client = new Client();
+const client = new Pool();
 
 export const dbconnect = client;
