@@ -165,11 +165,11 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction)  => {
     res.status(401).json({ error: "Unauthorized" });
   } else
     try {
-      const env = config as unknown as ProcessEnv;
+    
      
       const decoded: JwtPayload | string = jwt.verify(
         token,
-        env.ACCESS_TOKEN_PRIVATE_KEY
+        process.env.ACCESS_TOKEN_PRIVATE_KEY as string
       );
       
       if (typeof decoded === "object") {
